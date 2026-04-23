@@ -25,6 +25,13 @@
   --priority-high: #fee2e2;
   --priority-medium: #fde68a;
   --priority-minor: #bbf7d0;
+  --accent: #6366f1;
+  --accent-muted: rgba(99, 102, 241, 0.12);
+  --accent-text: #818cf8;
+  --badge-critical-bg: rgba(254, 202, 202, 0.12);
+  --badge-high-bg: rgba(254, 226, 226, 0.10);
+  --badge-medium-bg: rgba(253, 230, 138, 0.12);
+  --badge-minor-bg: rgba(187, 247, 208, 0.10);
 }
 
 html[data-theme="light"] {
@@ -52,6 +59,13 @@ html[data-theme="light"] {
   --priority-high: #bf5555;
   --priority-medium: #9b7b30;
   --priority-minor: #3f8c57;
+  --accent: #4f46e5;
+  --accent-muted: rgba(79, 70, 229, 0.10);
+  --accent-text: #4f46e5;
+  --badge-critical-bg: rgba(220, 38, 38, 0.10);
+  --badge-high-bg: rgba(220, 80, 80, 0.08);
+  --badge-medium-bg: rgba(180, 130, 0, 0.10);
+  --badge-minor-bg: rgba(34, 160, 80, 0.10);
 }
 
 * {

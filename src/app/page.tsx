@@ -327,18 +327,18 @@ function Navbar({ mode, onToggle }: { mode: ThemeMode; onToggle: () => void }) {
         <LogoMark />
         <div className="flex items-center gap-2">
           <ThemeToggle mode={mode} onToggle={onToggle} />
-          <button
-            type="button"
-            className="rounded-lg border border-[var(--border)] px-4 py-2 text-sm text-[var(--muted)] transition hover:bg-[var(--hover)] hover:text-[var(--text)]"
+          <a
+            href="/login"
+            className="rounded-lg border border-[var(--border)] px-4 py-2 text-sm text-[var(--muted)] transition hover:bg-[var(--hover)] hover:text-[var(--text)] no-underline"
           >
             Login
-          </button>
-          <button
-            type="button"
-            className="rounded-lg border border-[var(--border-strong)] bg-[var(--surface)] px-4 py-2 text-sm text-[var(--text)] transition hover:bg-[var(--hover)]"
+          </a>
+          <a
+            href="/signup"
+            className="rounded-lg border border-[var(--border-strong)] bg-[var(--surface)] px-4 py-2 text-sm text-[var(--text)] transition hover:bg-[var(--hover)] no-underline"
           >
             Signup
-          </button>
+          </a>
         </div>
       </div>
     </header>
@@ -1463,18 +1463,18 @@ function FinalCTASection({ reduceMotion }: { reduceMotion: boolean }) {
           Start fixing bugs faster.
         </h2>
         <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
-          <button
-            type="button"
-            className="rounded-lg border border-[var(--border-strong)] bg-[var(--surface)] px-5 py-2.5 text-sm font-medium text-[var(--text)] transition hover:bg-[var(--hover)]"
+          <a
+            href="/signup"
+            className="rounded-lg border border-[var(--border-strong)] bg-[var(--surface)] px-5 py-2.5 text-sm font-medium text-[var(--text)] transition hover:bg-[var(--hover)] no-underline"
           >
             Get Started
-          </button>
-          <button
-            type="button"
-            className="rounded-lg border border-[var(--border)] bg-transparent px-5 py-2.5 text-sm font-medium text-[var(--muted)] transition hover:bg-[var(--hover)] hover:text-[var(--text)]"
+          </a>
+          <a
+            href="/dashboard"
+            className="rounded-lg border border-[var(--border)] bg-transparent px-5 py-2.5 text-sm font-medium text-[var(--muted)] transition hover:bg-[var(--hover)] hover:text-[var(--text)] no-underline"
           >
             View Demo
-          </button>
+          </a>
         </div>
       </motion.div>
     </motion.section>
