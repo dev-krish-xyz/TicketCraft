@@ -108,9 +108,17 @@ export default function TicketsPage() {
               }}
             >
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium truncate" style={{ color: "var(--text)" }}>{ticket.title}</p>
+                <p
+                  className="text-base font-semibold truncate px-2 py-0.5 rounded-md inline-block max-w-full"
+                  style={{
+                    color: PRIORITY_COLORS[ticket.priority] ?? "var(--text)",
+                    background: PRIORITY_BG[ticket.priority] ?? "var(--panel-deep)",
+                  }}
+                >
+                  {ticket.title}
+                </p>
                 {ticket.rootCause && (
-                  <p className="text-xs mt-1 truncate italic" style={{ color: "var(--muted)" }}>
+                  <p className="text-xs mt-1.5 truncate italic" style={{ color: "var(--muted)" }}>
                     {ticket.rootCause}
                   </p>
                 )}

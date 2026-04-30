@@ -479,13 +479,17 @@ export default function SignalsPage() {
             <div
               key={signal.id}
               className="flex items-center gap-4 p-4 rounded-xl border transition-all"
-              style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+              style={{
+                background: "var(--surface)",
+                borderColor: "var(--border)",
+                boxShadow: `inset 3px 0 0 ${STATUS_COLORS[signal.status] ?? "var(--accent)"}`,
+              }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = "0 2px 12px rgba(0,0,0,0.15), inset 3px 0 0 var(--accent)";
+                e.currentTarget.style.boxShadow = `0 2px 12px rgba(0,0,0,0.12), inset 3px 0 0 ${STATUS_COLORS[signal.status] ?? "var(--accent)"}`;
                 e.currentTarget.style.borderColor = "var(--border-strong)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = "none";
+                e.currentTarget.style.boxShadow = `inset 3px 0 0 ${STATUS_COLORS[signal.status] ?? "var(--accent)"}`;
                 e.currentTarget.style.borderColor = "var(--border)";
               }}
             >
