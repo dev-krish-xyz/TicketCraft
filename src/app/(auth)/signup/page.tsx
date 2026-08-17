@@ -6,11 +6,11 @@ import Link from "next/link";
 export default function SignupPage() {
   return (
     <div
-      className="min-h-screen flex items-center justify-center"
+      className="page-grid min-h-screen flex items-center justify-center px-4"
       style={{ background: "var(--bg)" }}
     >
       <div
-        className="w-full max-w-md p-8 rounded-xl border"
+        className="tc-auth-card w-full max-w-md p-8 rounded-xl border"
         style={{
           background: "var(--surface)",
           borderColor: "var(--border)",
@@ -22,8 +22,8 @@ export default function SignupPage() {
             <div
               className="w-8 h-8 rounded-md flex items-center justify-center text-sm font-bold"
               style={{
-                background: "var(--text)",
-                color: "var(--bg)",
+                background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
+                color: "white",
               }}
             >
               TC
@@ -36,7 +36,7 @@ export default function SignupPage() {
             Create your account
           </h1>
           <p className="text-sm" style={{ color: "var(--muted)" }}>
-            Get started with TicketCraft for free
+            Get started with TicketCraft in under a minute
           </p>
         </div>
 
@@ -44,17 +44,17 @@ export default function SignupPage() {
           onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
           className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg border text-sm font-medium transition-colors cursor-pointer"
           style={{
-            background: "var(--panel)",
-            borderColor: "var(--border)",
+            background: "var(--surface)",
+            borderColor: "var(--border-strong)",
             color: "var(--text)",
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.background = "var(--hover)";
-            e.currentTarget.style.borderColor = "var(--border-strong)";
+            e.currentTarget.style.borderColor = "var(--border-active)";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.background = "var(--panel)";
-            e.currentTarget.style.borderColor = "var(--border)";
+            e.currentTarget.style.background = "var(--surface)";
+            e.currentTarget.style.borderColor = "var(--border-strong)";
           }}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">

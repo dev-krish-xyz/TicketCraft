@@ -227,47 +227,48 @@ const OUTPUT_PATH: WirePath = {
 };
 
 const SIGNAL_TONES: Record<BugSignal["kind"], { chipBg: string; chipBorder: string; chipText: string; cardTint: string; accent: string }> = {
+  /* Mid-contrast tones readable on both dark and light surfaces */
   sentry: {
     chipBg: "rgba(244, 63, 94, 0.12)",
     chipBorder: "rgba(244, 63, 94, 0.34)",
-    chipText: "rgb(220 122 138)",
+    chipText: "rgb(225 90 110)",
     cardTint: "rgba(244, 63, 94, 0.045)",
     accent: "rgba(244, 63, 94, 0.58)",
   },
   terminal: {
     chipBg: "rgba(16, 185, 129, 0.12)",
     chipBorder: "rgba(16, 185, 129, 0.3)",
-    chipText: "rgb(104 190 159)",
+    chipText: "rgb(16 160 120)",
     cardTint: "rgba(16, 185, 129, 0.04)",
     accent: "rgba(16, 185, 129, 0.54)",
   },
   logs: {
     chipBg: "rgba(245, 158, 11, 0.12)",
     chipBorder: "rgba(245, 158, 11, 0.32)",
-    chipText: "rgb(210 170 82)",
+    chipText: "rgb(180 120 20)",
     cardTint: "rgba(245, 158, 11, 0.04)",
     accent: "rgba(245, 158, 11, 0.54)",
   },
   slack: {
     chipBg: "rgba(99, 102, 241, 0.12)",
     chipBorder: "rgba(99, 102, 241, 0.3)",
-    chipText: "rgb(136 143 213)",
+    chipText: "rgb(90 95 200)",
     cardTint: "rgba(99, 102, 241, 0.04)",
     accent: "rgba(99, 102, 241, 0.52)",
   },
   support: {
-    chipBg: "rgba(148, 163, 184, 0.11)",
-    chipBorder: "rgba(148, 163, 184, 0.26)",
-    chipText: "rgb(148 163 184)",
-    cardTint: "rgba(148, 163, 184, 0.035)",
-    accent: "rgba(148, 163, 184, 0.45)",
+    chipBg: "rgba(100, 116, 139, 0.12)",
+    chipBorder: "rgba(100, 116, 139, 0.28)",
+    chipText: "rgb(100 116 139)",
+    cardTint: "rgba(100, 116, 139, 0.04)",
+    accent: "rgba(100, 116, 139, 0.45)",
   },
   screenshot: {
-    chipBg: "rgba(203, 213, 225, 0.1)",
-    chipBorder: "rgba(148, 163, 184, 0.22)",
-    chipText: "rgb(148 163 184)",
-    cardTint: "rgba(148, 163, 184, 0.03)",
-    accent: "rgba(148, 163, 184, 0.4)",
+    chipBg: "rgba(100, 116, 139, 0.1)",
+    chipBorder: "rgba(100, 116, 139, 0.24)",
+    chipText: "rgb(100 116 139)",
+    cardTint: "rgba(100, 116, 139, 0.03)",
+    accent: "rgba(100, 116, 139, 0.4)",
   },
 };
 
@@ -322,7 +323,7 @@ function LogoMark() {
 
 function Navbar({ mode, onToggle }: { mode: ThemeMode; onToggle: () => void }) {
   return (
-    <header className="border-b border-[var(--border)] bg-[var(--bg)]/95 backdrop-blur-sm">
+    <header className="tc-navbar sticky top-0 z-40 border-b border-[var(--border)] bg-[var(--bg)]/95 backdrop-blur-sm">
       <div className="mx-auto flex w-full max-w-[1300px] items-center justify-between px-6 py-4 sm:px-10 lg:px-16">
         <LogoMark />
         <div className="flex items-center gap-2">
@@ -335,7 +336,7 @@ function Navbar({ mode, onToggle }: { mode: ThemeMode; onToggle: () => void }) {
           </a>
           <a
             href="/signup"
-            className="rounded-lg border border-[var(--border-strong)] bg-[var(--surface)] px-4 py-2 text-sm text-[var(--text)] transition hover:bg-[var(--hover)] no-underline"
+            className="tc-btn-primary rounded-lg border border-[var(--border-strong)] bg-[var(--surface)] px-4 py-2 text-sm text-[var(--text)] transition hover:bg-[var(--hover)] no-underline"
           >
             Signup
           </a>
@@ -978,7 +979,7 @@ function FeatureDemoCard({
       variants={fadeUp}
       whileHover={reduceMotion ? undefined : { scale: 1.015, y: -2 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4"
+      className="tc-card rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4"
       style={{ boxShadow: "var(--card-shadow)" }}
     >
       <div>{demoMap[item.demo]}</div>
@@ -1002,7 +1003,7 @@ function FeatureCard({
       variants={fadeUp}
       whileHover={reduceMotion ? undefined : { scale: 1.015, y: -2 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5"
+      className="tc-card rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5"
       style={{ boxShadow: "var(--card-shadow)" }}
     >
       <h3 className="text-base font-semibold text-[var(--text)]">{item.title}</h3>
@@ -1211,7 +1212,7 @@ function BugSignalFeatureCard({
       variants={fadeUp}
       whileHover={reduceMotion ? undefined : { scale: 1.015 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4"
+      className="tc-card rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4"
       style={{ boxShadow: "var(--card-shadow)" }}
     >
       <div>{demoMap[item.demo]}</div>
@@ -1454,7 +1455,7 @@ function FinalCTASection({ reduceMotion }: { reduceMotion: boolean }) {
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: false, amount: 0.35 }}
         transition={{ duration: reduceMotion ? 0 : 0.55, ease: EASE }}
-        className="rounded-2xl border border-[var(--border)] bg-[var(--panel)] p-10 text-center"
+        className="tc-card rounded-2xl border border-[var(--border)] bg-[var(--panel)] p-10 text-center"
         style={{ boxShadow: "var(--card-shadow)" }}
       >
         <h2 className="text-3xl font-semibold leading-tight text-[var(--text)] sm:text-4xl">
@@ -1462,18 +1463,21 @@ function FinalCTASection({ reduceMotion }: { reduceMotion: boolean }) {
           <br />
           Start fixing bugs faster.
         </h2>
+        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-[var(--muted)]">
+          Sign in, create a team, and turn messy signals into actionable tickets.
+        </p>
         <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
           <a
             href="/signup"
-            className="rounded-lg border border-[var(--border-strong)] bg-[var(--surface)] px-5 py-2.5 text-sm font-medium text-[var(--text)] transition hover:bg-[var(--hover)] no-underline"
+            className="tc-btn-primary rounded-lg border border-[var(--border-strong)] bg-[var(--surface)] px-5 py-2.5 text-sm font-medium text-[var(--text)] transition hover:bg-[var(--hover)] no-underline"
           >
             Get Started
           </a>
           <a
-            href="/dashboard"
+            href="/login"
             className="rounded-lg border border-[var(--border)] bg-transparent px-5 py-2.5 text-sm font-medium text-[var(--muted)] transition hover:bg-[var(--hover)] hover:text-[var(--text)] no-underline"
           >
-            View Demo
+            Sign in
           </a>
         </div>
       </motion.div>
@@ -1500,7 +1504,7 @@ function HeroSection({ reduceMotion }: { reduceMotion: boolean }) {
 
         <div className="relative z-20 grid gap-8 lg:grid-cols-[1.06fr_0.9fr_1.04fr]">
           <div
-            className="relative h-[560px] overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--panel)] p-3"
+            className="tc-card relative h-[560px] overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--panel)] p-3"
             style={{ boxShadow: "var(--card-shadow)" }}
           >
             <p className="px-1 text-[10px] uppercase tracking-[0.12em] text-[var(--muted)]">Production Bug Signals</p>

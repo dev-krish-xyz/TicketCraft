@@ -35,37 +35,38 @@
 }
 
 html[data-theme="light"] {
-  --bg: #f6f7f9;
-  --text: #1b1f27;
-  --muted: #6c7280;
+  /* Cool neutral canvas — clearer separation between page / cards / nested panels */
+  --bg: #f3f5f8;
+  --text: #0f172a;
+  --muted: #64748b;
   --surface: #ffffff;
-  --panel: #fafbfd;
-  --panel-deep: #f3f5f8;
-  --border: #d7dde6;
-  --border-soft: #c9d1dc;
-  --border-strong: #b7c0cc;
-  --border-active: #5f6673;
-  --hover: #f1f4f8;
-  --wire: #c6ceda;
-  --wire-active: #667080;
-  --wire-active-soft: #8a94a3;
-  --wire-pulse: rgba(102, 112, 128, 0.4);
-  --node-bg: rgba(251, 252, 255, 0.94);
-  --node-shadow: 0 16px 34px -24px rgba(27, 31, 39, 0.2);
-  --card-shadow: 0 14px 28px -24px rgba(27, 31, 39, 0.16);
-  --card-glow: 0 0 15px rgba(102, 112, 128, 0.13);
-  --grid-line: rgba(27, 31, 39, 0.03);
-  --priority-critical: #b33f3f;
-  --priority-high: #bf5555;
-  --priority-medium: #9b7b30;
-  --priority-minor: #3f8c57;
+  --panel: #ffffff;
+  --panel-deep: #eef2f7;
+  --border: #e2e8f0;
+  --border-soft: #e8edf3;
+  --border-strong: #cbd5e1;
+  --border-active: #475569;
+  --hover: #eef2f7;
+  --wire: #cbd5e1;
+  --wire-active: #475569;
+  --wire-active-soft: #64748b;
+  --wire-pulse: rgba(79, 70, 229, 0.28);
+  --node-bg: rgba(255, 255, 255, 0.96);
+  --node-shadow: 0 14px 36px -20px rgba(15, 23, 42, 0.16);
+  --card-shadow: 0 12px 32px -20px rgba(15, 23, 42, 0.12);
+  --card-glow: 0 0 0 1px rgba(79, 70, 229, 0.06);
+  --grid-line: rgba(15, 23, 42, 0.045);
+  --priority-critical: #b91c1c;
+  --priority-high: #c2410c;
+  --priority-medium: #a16207;
+  --priority-minor: #15803d;
   --accent: #4f46e5;
-  --accent-muted: rgba(79, 70, 229, 0.10);
-  --accent-text: #4f46e5;
-  --badge-critical-bg: rgba(220, 38, 38, 0.10);
-  --badge-high-bg: rgba(220, 80, 80, 0.08);
-  --badge-medium-bg: rgba(180, 130, 0, 0.10);
-  --badge-minor-bg: rgba(34, 160, 80, 0.10);
+  --accent-muted: rgba(79, 70, 229, 0.09);
+  --accent-text: #4338ca;
+  --badge-critical-bg: rgba(185, 28, 28, 0.09);
+  --badge-high-bg: rgba(194, 65, 12, 0.09);
+  --badge-medium-bg: rgba(161, 98, 7, 0.1);
+  --badge-minor-bg: rgba(21, 128, 61, 0.09);
 }
 
 * {
@@ -99,4 +100,45 @@ body {
 ::selection {
   background: rgba(120, 120, 120, 0.2);
   color: var(--text);
+}
+
+html[data-theme="light"] ::selection {
+  background: rgba(79, 70, 229, 0.16);
+  color: var(--text);
+}
+
+/* Light-mode chrome: softer sticky header + clearer primary actions */
+html[data-theme="light"] .tc-navbar {
+  background: rgba(243, 245, 248, 0.88);
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04);
+}
+
+html[data-theme="light"] .tc-btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+html[data-theme="light"] .tc-btn-primary:hover {
+  background: #4338ca;
+  border-color: #4338ca;
+  color: #ffffff;
+}
+
+html[data-theme="light"] .tc-card {
+  box-shadow: var(--card-shadow);
+}
+
+html[data-theme="light"] .tc-auth-card {
+  box-shadow:
+    0 1px 0 rgba(15, 23, 42, 0.03),
+    0 18px 40px -24px rgba(15, 23, 42, 0.18);
+}
+
+/* Nested panels read more clearly on white cards in light mode */
+html[data-theme="light"] .page-grid {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
 }

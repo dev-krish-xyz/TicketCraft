@@ -161,10 +161,11 @@ function Sidebar({ user }: { user: User }) {
               className="flex items-center gap-3 py-2 rounded-lg text-sm transition-colors"
               style={{
                 background: isActive ? "var(--accent-muted)" : "transparent",
-                color: isActive ? "var(--text)" : "var(--muted)",
+                color: isActive ? "var(--accent-text)" : "var(--muted)",
                 borderLeft: `2px solid ${isActive ? "var(--accent)" : "transparent"}`,
                 paddingLeft: "10px",
                 paddingRight: "12px",
+                fontWeight: isActive ? 500 : 400,
               }}
             >
               <item.Icon />
