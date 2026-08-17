@@ -49,6 +49,28 @@ export async function POST(request: Request) {
   const { title, content, rawPayload } = parseGenericContent(parsed.data.content);
   const fingerprint = generateFingerprint(parsed.data.content);
 
+  // Dedup before insert: identical content for this team reuses the existing row
+  // instead of writing another signal and only flagging after the fact.
+  const existing = await getDb()
+    .select()
+    .from(signals)
+    .where(
+      and(eq(signals.teamId, teamId), eq(signals.fingerprint, fingerprint))
+    )
+    .limit(1);
+
+  if (existing.length > 0) {
+    return NextResponse.json(
+      {
+        ...existing[0],
+        isDuplicate: true,
+        duplicateCount: 1,
+        fingerprintContent: content.substring(0, 200),
+      },
+      { status: 200 }
+    );
+  }
+
   const [signal] = await getDb()
     .insert(signals)
     .values({
@@ -60,19 +82,11 @@ export async function POST(request: Request) {
     })
     .returning();
 
-  // Check for duplicates
-  const duplicates = await getDb()
-    .select({ id: signals.id })
-    .from(signals)
-    .where(
-      and(eq(signals.teamId, teamId), eq(signals.fingerprint, fingerprint))
-    );
-
   return NextResponse.json(
     {
       ...signal,
-      isDuplicate: duplicates.length > 1,
-      duplicateCount: duplicates.length,
+      isDuplicate: false,
+      duplicateCount: 1,
       fingerprintContent: content.substring(0, 200),
     },
     { status: 201 }

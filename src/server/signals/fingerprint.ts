@@ -11,9 +11,12 @@ import { createHash } from "crypto";
 function normalize(content: string): string {
   return content
     .toLowerCase()
+    // ISO timestamps and unix epoch millis/seconds
     .replace(/\d{4}-\d{2}-\d{2}[t ]\d{2}:\d{2}:\d{2}[.\d]*(z|[+-]\d{2}:?\d{2})?/g, "")
     .replace(/\b\d{10,13}\b/g, "")
+    // UUIDs and long hex request / trace ids (keeps real error text stable)
     .replace(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/gi, "")
+    .replace(/\b[0-9a-f]{16,}\b/gi, "")
     .replace(/\s+/g, " ")
     .trim();
 }
