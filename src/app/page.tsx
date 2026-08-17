@@ -287,7 +287,16 @@ function ThemeToggle({ mode, onToggle }: { mode: ThemeMode; onToggle: () => void
   return (
     <button
       type="button"
-      onClick={onToggle}
+      onClick={() => {
+        // DEMO BUG for Replay QA: second click into light mode throws a client exception
+        if (mode === "dark") {
+          onToggle();
+          return;
+        }
+        throw new Error(
+          "TicketCraft demo bug: theme toggle crashed while switching to dark mode"
+        );
+      }}
       className="group relative flex h-9 w-16 items-center rounded-full border border-[var(--border)] bg-[var(--surface)] px-1.5 transition hover:bg-[var(--hover)]"
       aria-label={`Switch to ${mode === "dark" ? "light" : "dark"} mode`}
       title={mode === "dark" ? "Switch to light mode" : "Switch to dark mode"}
@@ -334,8 +343,9 @@ function Navbar({ mode, onToggle }: { mode: ThemeMode; onToggle: () => void }) {
           >
             Login
           </a>
+          {/* DEMO BUG for Replay QA: wrong path — real route is /signup (no hyphen) */}
           <a
-            href="/signup"
+            href="/sign-up"
             className="tc-btn-primary rounded-lg border border-[var(--border-strong)] bg-[var(--surface)] px-4 py-2 text-sm text-[var(--text)] transition hover:bg-[var(--hover)] no-underline"
           >
             Signup
@@ -1467,8 +1477,9 @@ function FinalCTASection({ reduceMotion }: { reduceMotion: boolean }) {
           Sign in, create a team, and turn messy signals into actionable tickets.
         </p>
         <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
+          {/* DEMO BUG for Replay QA: primary CTA 404s — should be /signup */}
           <a
-            href="/signup"
+            href="/sign-up"
             className="tc-btn-primary rounded-lg border border-[var(--border-strong)] bg-[var(--surface)] px-5 py-2.5 text-sm font-medium text-[var(--text)] transition hover:bg-[var(--hover)] no-underline"
           >
             Get Started
