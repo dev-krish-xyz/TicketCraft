@@ -14,12 +14,39 @@ function requireEnv(name: string): string {
   return value;
 }
 
+/**
+ * Auth.js crashes with "Invalid URL" if AUTH_URL is set but not a real URL
+ * (common misconfig: pasting a secret into AUTH_URL).
+ * On Vercel, fall back to the production / deployment host.
+ */
+function ensureAuthUrl(): void {
+  const current = process.env.AUTH_URL;
+  const looksLikeUrl = !!current && /^https?:\/\/.+/i.test(current);
+
+  if (looksLikeUrl) return;
+
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    process.env.AUTH_URL = `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+    return;
+  }
+
+  if (process.env.VERCEL_URL) {
+    process.env.AUTH_URL = `https://${process.env.VERCEL_URL}`;
+    return;
+  }
+
+  // Leave unset — trustHost will derive from the request
+  if (current) {
+    delete process.env.AUTH_URL;
+  }
+}
+
 export const { handlers, auth, signIn, signOut } = NextAuth(() => {
-  // Fail with a clear message if production secrets are missing
+  ensureAuthUrl();
+
   const secret = requireEnv("AUTH_SECRET");
   const clientId = requireEnv("AUTH_GITHUB_ID");
   const clientSecret = requireEnv("AUTH_GITHUB_SECRET");
-  // Ensures DATABASE_URL is present before adapter init
   const db = getDb();
 
   return {
