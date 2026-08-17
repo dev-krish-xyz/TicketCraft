@@ -11,7 +11,8 @@ import type { AdapterAccountType } from "next-auth/adapters";
 export const users = pgTable("users", {
   id: uuid("id").defaultRandom().primaryKey(),
   name: text("name"),
-  email: text("email").unique().notNull(),
+  // Nullable: some GitHub accounts hide email; Auth.js still creates the user
+  email: text("email").unique(),
   emailVerified: timestamp("email_verified", { mode: "date" }),
   image: text("image"),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),

@@ -15,27 +15,28 @@ function requireEnv(name: string): string {
 }
 
 /**
- * Auth.js crashes with "Invalid URL" if AUTH_URL is set but not a real URL
- * (common misconfig: pasting a secret into AUTH_URL).
- * On Vercel, fall back to the production / deployment host.
+ * Auth.js crashes with "Invalid URL" if AUTH_URL is set but not a real URL.
+ * On Vercel production, always prefer the stable production host so OAuth
+ * cookies + callback stay on ticket-craft.vercel.app.
  */
 function ensureAuthUrl(): void {
-  const current = process.env.AUTH_URL;
-  const looksLikeUrl = !!current && /^https?:\/\/.+/i.test(current);
-
-  if (looksLikeUrl) return;
-
-  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    process.env.AUTH_URL = `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  // Stable production domain for OAuth redirect + cookies
+  if (process.env.VERCEL_ENV === "production") {
+    const productionHost =
+      process.env.VERCEL_PROJECT_PRODUCTION_URL || "ticket-craft.vercel.app";
+    process.env.AUTH_URL = `https://${productionHost}`;
     return;
   }
+
+  const current = process.env.AUTH_URL;
+  const looksLikeUrl = !!current && /^https?:\/\/.+/i.test(current);
+  if (looksLikeUrl) return;
 
   if (process.env.VERCEL_URL) {
     process.env.AUTH_URL = `https://${process.env.VERCEL_URL}`;
     return;
   }
 
-  // Leave unset — trustHost will derive from the request
   if (current) {
     delete process.env.AUTH_URL;
   }
@@ -51,25 +52,43 @@ export const { handlers, auth, signIn, signOut } = NextAuth(() => {
 
   return {
     secret,
+    // Keep adapter so users/accounts are stored for teams, but use JWT
+    // sessions — more reliable on Vercel serverless than DB session rows.
     adapter: DrizzleAdapter(db, {
       usersTable: users,
       accountsTable: accounts,
       sessionsTable: sessions,
       verificationTokensTable: verificationTokens,
     }),
+    session: {
+      strategy: "jwt",
+    },
     providers: [
       GitHub({
         clientId,
         clientSecret,
+        // Ensure we always get an email for account creation
+        authorization: {
+          params: { scope: "read:user user:email" },
+        },
       }),
     ],
     trustHost: true,
     pages: {
       signIn: "/login",
+      error: "/login",
     },
     callbacks: {
-      session({ session, user }) {
-        session.user.id = user.id;
+      async jwt({ token, user }) {
+        if (user?.id) {
+          token.sub = user.id;
+        }
+        return token;
+      },
+      async session({ session, token }) {
+        if (session.user && token.sub) {
+          session.user.id = token.sub;
+        }
         return session;
       },
     },
